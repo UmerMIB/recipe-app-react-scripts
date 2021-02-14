@@ -8,7 +8,7 @@ import "../../scss/Pages/Home/Recipes.scss";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Recipes = ({ recipes }) => {
+const Recipes = ({ recipes, handleRecipe }) => {
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [toDeleteID, setToDeleteID] = useState("");
@@ -17,12 +17,12 @@ const Recipes = ({ recipes }) => {
     history.push(`/recipe/${recipe._id}`);
   };
 
-  const handleClickOpen = (id) => {
-    setToDeleteID(id);
+  const handleClickOpen = (recipe) => {
+    setToDeleteID(recipe);
     setOpen(true);
   };
 
-  const handleClose = (deleteRecipe) => {
+  const handleOpen = (deleteRecipe) => {
     if (deleteRecipe) {
       axios
         .delete("/api/id", {
@@ -34,12 +34,13 @@ const Recipes = ({ recipes }) => {
           console.log("data", data);
           if (data.success) {
             toast.success(data.message);
+            handleRecipe(deleteRecipe, true);
           }
         })
         .catch((err) => {
-          const error = err.response.data;
+          const error = err?.response?.data;
           console.log("err", error);
-          toast.error(error.message);
+          toast.error(`Some error occured ${error?.message}`);
         });
     }
     setOpen(false);
@@ -50,7 +51,7 @@ const Recipes = ({ recipes }) => {
       <div>
         <Dialog
           open={open}
-          onClose={handleClose}
+          onClose={handleOpen}
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
@@ -58,8 +59,8 @@ const Recipes = ({ recipes }) => {
             Are you Sure you want to delete {toDeleteID.title} recipe?
           </DialogTitle>
           <DialogActions>
-            <Button onClick={handleClose} title="Disagree" />
-            <Button onClick={() => handleClose(true)} title="Agree" />
+            <Button onClick={handleOpen} title="Disagree" />
+            <Button onClick={() => handleOpen(true)} title="Agree" />
           </DialogActions>
         </Dialog>
       </div>

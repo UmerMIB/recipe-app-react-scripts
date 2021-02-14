@@ -1,27 +1,37 @@
 .Active-recipe {
-    margin: 0 auto;
-    width: 60%;
-  
-  .Active-recipe__img {
-    height: 500px !important;
+  margin: 0 auto;
+  width: 60%;
+  .Active-recipe__update-recipe-dialog {
+    padding: 10px;
   }
-  
-  .Active-recipe__title {
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    margin: 1rem 0;
-  }
-  
-  .Active-recipe__publisher{
-    text-transform: uppercase;
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
-  
-  .Active-recipe__publisher span {
-    text-transform: none;
-    font-weight: 300;
-    letter-spacing: 2px;
-    margin-left: 5px;
+  .Active-recipe__main {
+    display: flex;
+    column-gap: 20px;
+    .Active-recipe__img {
+      height: 320px !important;
+      width: 320px;
+      object-fit: contain;
+    }
+    .Active-recipe__title {
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin: 1rem 0;
+    }
+
+    .Active-recipe__sub-heading {
+      text-transform: uppercase;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .Active-recipe__sub-heading span {
+      text-transform: none;
+      font-weight: 300;
+      letter-spacing: 2px;
+      margin-left: 5px;
+    }
+    .Active-recipe__btn {
+      margin-left: 0px;
+    }
   }
 }

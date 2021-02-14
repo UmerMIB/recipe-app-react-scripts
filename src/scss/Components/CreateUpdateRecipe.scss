@@ -1,0 +1,50 @@
+.Create-Update-Recipe__Card {
+  max-width: 600px;
+  width: 100%;
+  border: 5px solid green;
+  padding: 20px !important;
+  //   margin: 10px;
+  .Create-Update-Recipe__field {
+    display: flex;
+    align-items: baseline;
+    align-content: center;
+    flex-wrap: wrap;
+    .Create-Update-Recipe__label {
+      font-weight: 800;
+      font-family: sans-serif;
+    }
+    .Create-Update-Recipe__input {
+      border: none;
+      border-bottom: 1px solid;
+      outline: none;
+      width: 100%;
+    }
+    .Create-Update-Recipe__ingredient {
+      display: flex;
+      padding: 0px;
+      margin: 0px;
+      .Create-Update-Recipe__ingredient-input {
+        border: none;
+        border-bottom: 1px solid;
+        outline: none;
+        width: 100%;
+      }
+      .Create-Update-Recipe__ingredient-add {
+        cursor: pointer;
+        color: green;
+        margin-left: 10px;
+      }
+    }
+  }
+  .Create-Update-Recipe__list-Recipe {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px;
+    align-items: center;
+    align-content: center;
+  }
+  .Create-Update-Recipe__submit-btn {
+    width: 100%;
+    margin-left: 0px;
+  }
+}

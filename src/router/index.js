@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import routes from "./routes";
 import Navbar from "../Components/Navbar";
-// import { toast, ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const App = () => {
   return (
@@ -18,7 +18,7 @@ const App = () => {
           />
         ))}
       </Switch>
-      {/* <ToastContainer position={toast.POSITION.TOP_RIGHT} /> */}
+      <ToastContainer position={toast.POSITION.TOP_RIGHT} />
     </Router>
   );
 };

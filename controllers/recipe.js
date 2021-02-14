@@ -211,7 +211,9 @@ recipeRouter
         (error) => {
           res.status(400).json({
             success: false,
-            error: error,
+            error: {
+              message: "Recipe not found",
+            },
           });
         }
       );
