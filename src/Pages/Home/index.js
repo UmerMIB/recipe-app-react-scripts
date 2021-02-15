@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import { recipes as dummyData } from '../../dummyData';
 import Form from "../../Components/Form";
 import Recipes from "./Recipes";
 import axios from "axios";
@@ -8,6 +7,8 @@ import { toast } from "react-toastify";
 
 export default function App() {
   const [recipes, setRecipies] = useState([]);
+  const [ingredient, setIngredient] = useState("");
+  const [temp, setTemp] = useState("");
 
   useEffect(() => {
     axios
@@ -19,29 +20,72 @@ export default function App() {
         }
       })
       .catch((err) => {
-        toast.error(`Error occured ${err.response.data.message}`);
-        console.log(err.response.data);
+        console.log("err", err.response.data);
+        let error = err?.response?.data;
+
+        toast.error(
+          `Something went wrong ${
+            !!error.error.message
+              ? error.error.message
+              : !!error.message
+              ? error.message
+              : ""
+          }`
+        );
+        setRecipies([]);
       });
   }, []);
 
-  const getRecipe = () => {};
+  const handleOnchange = (e) => setIngredient(e.target.value);
 
-  const handleRecipe = (recipe, deleteRecipe) => {
-    if (deleteRecipe) {
-      const recipeIndex = recipes.findIndex((item) => item._id === recipe._id);
-      console.log("recipeIndex", recipeIndex);
-      setRecipies((previousData) => {
-        let preData = [...previousData];
-        preData.splice(recipeIndex, 1);
-        return preData;
+  const getRecipe = (e) => {
+    e.preventDefault();
+    axios
+      .get("api/search", {
+        params: {
+          ingredient: ingredient,
+        },
+      })
+      .then((res) => {
+        setRecipies(res.data.data);
+        setTemp(Date.now());
+      })
+      .catch((err) => {
+        console.log("err", err.response.data);
+        let error = err?.response?.data;
+
+        toast.error(
+          `Something went wrong ${
+            !!error.error.message
+              ? error.error.message
+              : !!error.message
+              ? error.message
+              : ""
+          }`
+        );
+        setRecipies([]);
       });
-    }
+  };
+
+  const handleDeleteRecipe = (recipe) => {
+    setRecipies((previousData) => {
+      let preData = previousData.filter((item) => item._id !== recipe._id);
+      return preData;
+    });
   };
 
   return (
     <div className="RecipeSearch">
-      <Form getRecipe={getRecipe} />
-      <Recipes recipes={recipes} handleRecipe={handleRecipe} />
+      <Form
+        getRecipe={getRecipe}
+        handleOnchange={handleOnchange}
+        ingredient={ingredient}
+      />
+      <Recipes
+        recipes={recipes}
+        handleDeleteRecipe={handleDeleteRecipe}
+        temp={temp}
+      />
     </div>
   );
 }

@@ -8,7 +8,7 @@ import "../../scss/Pages/Home/Recipes.scss";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const Recipes = ({ recipes, handleRecipe }) => {
+const Recipes = ({ recipes, handleDeleteRecipe, temp }) => {
   const history = useHistory();
   const [open, setOpen] = React.useState(false);
   const [toDeleteID, setToDeleteID] = useState("");
@@ -34,15 +34,25 @@ const Recipes = ({ recipes, handleRecipe }) => {
           console.log("data", data);
           if (data.success) {
             toast.success(data.message);
-            handleRecipe(deleteRecipe, true);
+            handleDeleteRecipe(deleteRecipe);
           }
         })
         .catch((err) => {
-          const error = err?.response?.data;
-          console.log("err", error);
-          toast.error(`Some error occured ${error?.message}`);
+          console.log("err", err.response.data);
+          let error = err?.response?.data;
+
+          toast.error(
+            `Something went wrong ${
+              !!error.error.message
+                ? error.error.message
+                : !!error.message
+                ? error.message
+                : ""
+            }`
+          );
         });
     }
+
     setOpen(false);
   };
 
@@ -60,7 +70,7 @@ const Recipes = ({ recipes, handleRecipe }) => {
           </DialogTitle>
           <DialogActions>
             <Button onClick={handleOpen} title="Disagree" />
-            <Button onClick={() => handleOpen(true)} title="Agree" />
+            <Button onClick={() => handleOpen(toDeleteID)} title="Agree" />
           </DialogActions>
         </Dialog>
       </div>

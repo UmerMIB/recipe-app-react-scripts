@@ -1,22 +1,35 @@
 .Navbar {
-  text-align: center;
-  background-color: #2c3e50;
-  padding: 30px;
-  margin-bottom: 2rem;
   display: flex;
-  justify-content: center;
+  text-align: center;
+  background-color: #9acd32;
+  padding: 15px;
+  margin-bottom: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+  font-family: monospace;
 
-  .Navbar-title {
+  .Navbar__title {
     font-size: 1.5em;
     color: white !important;
     padding: 0px 10px;
     font-family: sans-serif;
     font-weight: 800;
-    .Navbar-title:hover {
+    text-decoration: none;
+    outline: none;
+    .Navbar__title:hover {
       text-decoration: none;
     }
-    .Navbar-title:focus {
+    .Navbar__title:focus {
       outline: none;
     }
+  }
+  .Navbar__brand {
+    cursor: pointer;
+    font-size: 40px;
+    font-weight: 900;
+    outline: none;
+    text-decoration: none;
+    color: red;
   }
 }

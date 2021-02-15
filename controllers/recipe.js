@@ -162,7 +162,7 @@ recipeRouter
             message: "Recipe ID is required",
           },
         });
-      const foundRecipe = await recipe.findByIdAndDelete(req.query.id);
+      const foundRecipe = await recipe.findByIdAndDelete(req.body.id);
       res.status(200).json({
         success: true,
         message: "Recipe Deleted Successfully",
@@ -223,6 +223,45 @@ recipeRouter
         error: error,
       });
     }
+  });
+
+recipeRouter
+  .route("/search")
+  .all((req, res, next) => {
+    res.setHeader("Content-Type", "application/json");
+    next();
+  })
+  .get(async (req, res) => {
+    if (!req.query.ingredient)
+      return res.status(400).json({
+        success: false,
+        error: {
+          message: "Ingredient name is required",
+        },
+      });
+    recipe
+      .find({ ingredients: { $all: ["umer"] } })
+      .then(
+        (data) => {
+          res.status(200).json({
+            success: true,
+            data: data,
+          });
+        },
+        (err) =>
+          res.status(400).json({
+            success: false,
+            error: {
+              message: "No recipe found",
+            },
+          })
+      )
+      .catch((err) =>
+        res.status(400).json({
+          success: false,
+          error: err,
+        })
+      );
   });
 
 module.exports = recipeRouter;

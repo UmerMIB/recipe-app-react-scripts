@@ -36,9 +36,16 @@ function RecipeDetail({ match }) {
         setLoading(false);
       })
       .catch((err) => {
-        console.log("err", err);
         setLoading(false);
-        setErrMess(err.response.data.message);
+        console.log("err", err.response.data);
+        let error = err?.response?.data;
+        error = !!error.error.message
+          ? error.error.message
+          : !!error.message
+          ? error.message
+          : "";
+        toast.error(`Something went wrong ${error}`);
+        setErrMess(error);
       });
   }, []);
 
@@ -78,31 +85,41 @@ function RecipeDetail({ match }) {
         } else toast.info(res.data.message);
       })
       .catch((err) => {
-        // console.log("err", err.response);s
-        let error = err?.response?.data?.error?.message;
-        toast.error(`Error occured ${error}`);
+        console.log("err", err.response.data);
+        let error = err?.response?.data;
+
+        toast.error(
+          `Something went wrong ${
+            !!error.error.message
+              ? error.error.message
+              : !!error.message
+              ? error.message
+              : ""
+          }`
+        );
       });
   };
 
   return (
     <div className="container Active-recipe">
+      <Dialog
+        open={open}
+        maxWidth={"sm"}
+        onClose={handleOpen}
+        fullWidth
+        className="Active-recipe__update-recipe-dialog"
+      >
+        <CreatUpdateRecipe
+          data={data}
+          handleChange={handleChange}
+          update
+          handleSubmit={handleSubmit}
+          handleAddIngredient={handleAddIngredient}
+        />
+      </Dialog>
+
       {!!recipeDetails && !loading ? (
         <div className="Active-recipe__main">
-          <Dialog
-            open={open}
-            maxWidth={"sm"}
-            onClose={handleOpen}
-            fullWidth
-            className="Active-recipe__update-recipe-dialog"
-          >
-            <CreatUpdateRecipe
-              data={data}
-              handleChange={handleChange}
-              update
-              handleSubmit={handleSubmit}
-              handleAddIngredient={handleAddIngredient}
-            />
-          </Dialog>
           <div>
             <img
               className="Active-recipe__img"

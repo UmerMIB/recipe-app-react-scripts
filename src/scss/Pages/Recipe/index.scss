@@ -7,6 +7,7 @@
   .Active-recipe__main {
     display: flex;
     column-gap: 20px;
+    flex-wrap: wrap;
     .Active-recipe__img {
       height: 320px !important;
       width: 320px;

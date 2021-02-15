@@ -53,17 +53,20 @@ const CreateRecipe = () => {
           toast.success(data.message);
         }
       })
-      .catch((error) => {
-        console.log("err", error.response.data);
-        toast.error(error?.response?.data?.message);
+      .catch((err) => {
+        console.log("err", err.response.data);
+        let error = err?.response?.data;
+
+        toast.error(
+          `Something went wrong ${
+            !!error.error.message
+              ? error.error.message
+              : !!error.message
+              ? error.message
+              : ""
+          }`
+        );
       });
-    // setData({
-    //   title: "",
-    //   description: "",
-    //   image_url: "",
-    //   publisher: "",
-    //   ingredients: ["rice", "water"],
-    // });
   };
 
   return (
@@ -77,8 +80,6 @@ const CreateRecipe = () => {
         handleAddIngredient={handleAddIngredient}
         ingredientName={ingredientName}
       />
-
-      {/* <ToastContainer position={toast.POSITION.TOP_RIGHT} /> */}
     </div>
   );
 };
